@@ -1,0 +1,22 @@
+mubede-university-project 
+|-server.js 
+|-database.db
+|-package.json
+|---env
+
+----public/
+    |--login.html
+    |--dashboard.html
+    |--payment.html
+    |--styles.css
+    |--scripts.js
+    |--images/
+        |--logo.png
+        |--payment.png
+        |--dashboard.png
+        |--menu.png
+        |--notification.png
+        |--user.png
+        |--settings.png    
+        
+   

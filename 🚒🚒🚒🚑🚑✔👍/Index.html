@@ -1,0 +1,91 @@
+<h2>Mubede University Login </h2>
+
+<input id="username" placeholder="username" />
+<input id="password" type="password" placeholder="password" />
+
+
+<button onclick="login()">
+    Login </button>
+<script>
+
+    //login function
+    async function login() {
+        const res = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "content-type":
+                    "application/json"
+            },
+            body: JSON.stringify({
+                username: username.value,
+                password: password.value
+            })
+
+        });
+
+        const data = await res.json();
+
+        if (data.token) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(date.user));
+            window.location.href = "dashboard.html";
+        } else {
+            alert(date.message);
+        }
+    }
+    async function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        if (username === "RAYAN" && password === "789456123") {
+            window.location.href = "dashboard.html";
+        } else {
+            alert("Invalid username or password");
+        }
+    }
+</script>
+
+<h2>Dashboard</h2>
+<p id="info"></p>
+<h3>Users</h3>
+<ul id="users"></ul>
+
+<h3>payments (Admin only)</h3>
+<ul id="payments"></ul>
+<script>
+    const user =
+        JSON.parse(localStorage.getItem("user"));
+    const token = localStorage.getItem("token");
+    document.getElementById("info").innerText = `welcome ${user.username}(${user.role})`
+
+    /* users*/
+    if (user.role === "admin" || user.role === "admin") {
+        fetch("/users", {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(res => res.json()).then(data => {
+            const ul = document.getElementById("users");
+            data.map(user => `<li>{user.username} - $ {user.role}</li>`).join("");
+        })
+
+
+    }
+
+    /*payments*/
+    fetch("/payments", {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+
+    }
+    )
+        .then(res => res.json())
+        .then(data => {
+            const ul = document.getElementById("payments");
+            data.map(p => `<li>${p.id} - ${p.student_name} - ${p.amount} - ${p.status}</li>`).join("")
+            ul.innerHTML = li
+        })
+
+
+
+</script>
